@@ -3,13 +3,18 @@ import styles from './student.module.css'
 
 class Student extends Component {
   render() {
-    return (
+    const { name, gender, knownFor, cohort }  = this.props.student;
+
+    return  (
       <React.Fragment>
-        <strong className={styles.strong}>
-          {this.props.student.name}
-        </strong>
-        &nbsp;=>&nbsp;
-        <em>{this.props.student.knownFor}</em>
+        <h2 className={ styles.strong }>
+          { name }
+         </h2 >
+         <ul>
+          <li>{ gender }</li>
+          <li>{ knownFor }</li>
+          <li>{ cohort.name }</li>
+        </ul>
       </React.Fragment>
     );
   }
