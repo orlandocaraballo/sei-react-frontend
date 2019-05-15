@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Student from './Student';
+import _ from 'lodash';
 
 class Students extends Component {
   state = {
@@ -11,7 +12,7 @@ class Students extends Component {
     const data = await res.json();
     
     this.setState({
-      students: data
+      students: _.shuffle(data)
     });
   }
 
