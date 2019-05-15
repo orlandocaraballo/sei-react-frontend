@@ -1,3 +1,16 @@
 .strong {
-  background-color: blue;
+  /* background-color: blue; */
+}
+
+ul {
+  padding: 0 1em;
+}
+
+li {
+  list-style: none;
+  padding: .5em 0;
+}
+
+h2 {
+  text-transform: capitalize;
 }
