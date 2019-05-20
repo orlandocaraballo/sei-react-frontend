@@ -6,20 +6,17 @@ import store, { actionCreators } from "./store.js";
 import { generateStudent } from "../utils/generators";
 
 class Students extends Component {
-  // state = {
-  //   students: store.getState().students
-  //   // amount: store.getState().amount
-  // };
-
   state = store.getState();
 
   async componentDidMount() {
     const res = await fetch("https://sei-api.herokuapp.com/students");
     const data = await res.json();
 
+    // setup our subscriptions
     store.subscribe(() => this.setState(store.getState));
     store.subscribe(() => console.log(store.getState()));
 
+    // dispatch our replace students action
     store.dispatch(
       actionCreators.replaceStudents(_.shuffle(data), data.length)
     );
