@@ -17,14 +17,36 @@ class Students extends Component {
     store.subscribe(() => console.log(store.getState()));
 
     // dispatch our replace students action
-    store.dispatch(
+    this.unsubscribe = store.dispatch(
       actionCreators.replaceStudents(_.shuffle(data), data.length)
     );
   }
 
-  handleAddStudent = e => {
+  componentWillUnmount() {
+    this.unsubscribe();
+  }
+
+  handleSubmit = event => {
+    // prevent form submission
+    event.preventDefault();
+
+    const { nameInput, genderInput, knownForInput, ageInput } = event.target;
+
+    const id = store.getState().count + 9000;
+
     store.dispatch(
-      actionCreators.addStudent(generateStudent(store.getState().count))
+      // actionCreators.addStudent(generateStudent(store.getState().count))
+      actionCreators.addStudent({
+        id: id,
+        name: `${nameInput.value} ${id}`,
+        gender: genderInput.value,
+        knownFor: knownForInput.value,
+        age: ageInput.value,
+        cohort: {
+          id: 10,
+          name: "new cohort"
+        }
+      })
     );
   };
 
@@ -37,7 +59,20 @@ class Students extends Component {
 
     return (
       <React.Fragment>
-        <button onClick={this.handleAddStudent}>Add Rando Student!</button>
+        <div>
+          <form action="post" onSubmit={this.handleSubmit}>
+            <input type="text" name="nameInput" id="" placeholder="name" />
+            <input type="text" name="ageInput" id="" placeholder="age" />
+            <input type="text" name="genderInput" id="" placeholder="gender" />
+            <input
+              type="text"
+              name="knownForInput"
+              id=""
+              placeholder="known for"
+            />
+            <input type="submit" value="Create Rando Student!" />
+          </form>
+        </div>
         <ul>{studentElements}</ul>
       </React.Fragment>
     );
