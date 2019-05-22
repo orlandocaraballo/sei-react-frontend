@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Student from "./Student";
 import _ from "lodash";
 import styles from "./students.module.css";
-import store, { actionCreators } from "../store";
+import store, { actionCreators } from "../redux/store";
 import { connect } from "react-redux";
 
 class Students extends Component {

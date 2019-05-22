@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import styles from "./student.module.css";
-import store, { actionCreators } from "../store";
+import store, { actionCreators } from "../redux/store";
 import { connect } from "react-redux";
 
 class Student extends Component {
