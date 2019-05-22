@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import styles from "./student.module.css";
-import store from "../redux/store";
 import { actionCreators } from "../redux/actionCreators";
 import { connect } from "react-redux";
 
 class Student extends Component {
   handleRemoveStudent = e => {
-    store.dispatch(actionCreators.removeStudent(this.props.id));
+    this.props.removeStudent(this.props.id);
   };
 
   render() {
