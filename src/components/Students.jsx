@@ -2,18 +2,13 @@ import React, { Component } from "react";
 import Student from "./Student";
 import _ from "lodash";
 import styles from "./students.module.css";
-import store from "../redux/store";
-import { actionCreators } from "../redux/actionCreators";
+import { replaceStudents, addStudent } from "../redux/actionCreators";
 import { connect } from "react-redux";
 
 class Students extends Component {
-  state = store.getState();
-
   async componentDidMount() {
     const res = await fetch("https://sei-api.herokuapp.com/students");
     const data = await res.json();
-
-    // console.log(this.props);
 
     // setup our subscriptions
     // store.subscribe(() => this.setState(store.getState));
@@ -84,8 +79,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   replaceStudents: (students, count) =>
-    dispatch(actionCreators.replaceStudents(students, count)),
-  addStudent: student => dispatch(actionCreators.addStudent(student))
+    dispatch(replaceStudents(students, count)),
+  addStudent: student => dispatch(addStudent(student))
 });
 
 export default connect(
