@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import Student from "./Student";
 import _ from "lodash";
 import styles from "./students.module.css";
-import store, { actionCreators } from "./store.js";
-import { generateStudent } from "../utils/generators";
+import store, { actionCreators } from "../store";
+import { connect } from "react-redux";
 
 class Students extends Component {
   state = store.getState();
@@ -12,14 +12,14 @@ class Students extends Component {
     const res = await fetch("https://sei-api.herokuapp.com/students");
     const data = await res.json();
 
+    // console.log(this.props);
+
     // setup our subscriptions
-    store.subscribe(() => this.setState(store.getState));
-    store.subscribe(() => console.log(store.getState()));
+    // store.subscribe(() => this.setState(store.getState));
+    // store.subscribe(() => console.log(store.getState()));
 
     // dispatch our replace students action
-    this.unsubscribe = store.dispatch(
-      actionCreators.replaceStudents(_.shuffle(data), data.length)
-    );
+    this.unsubscribe = this.props.replaceStudents(_.shuffle(data), data.length);
   }
 
   componentWillUnmount() {
@@ -32,26 +32,23 @@ class Students extends Component {
 
     const { nameInput, genderInput, knownForInput, ageInput } = event.target;
 
-    const id = store.getState().count + 9000;
+    const id = this.props.count + 9000;
 
-    store.dispatch(
-      // actionCreators.addStudent(generateStudent(store.getState().count))
-      actionCreators.addStudent({
-        id: id,
-        name: `${nameInput.value} ${id}`,
-        gender: genderInput.value,
-        knownFor: knownForInput.value,
-        age: ageInput.value,
-        cohort: {
-          id: 10,
-          name: "new cohort"
-        }
-      })
-    );
+    this.props.addStudent({
+      id: id,
+      name: `${nameInput.value} ${id}`,
+      gender: genderInput.value,
+      knownFor: knownForInput.value,
+      age: ageInput.value,
+      cohort: {
+        id: 10,
+        name: "new cohort"
+      }
+    });
   };
 
   render() {
-    const studentElements = this.state.students.map(student => (
+    const studentElements = this.props.students.map(student => (
       <li key={student.id} className={styles.student}>
         <Student student={student} id={student.id} />
       </li>
@@ -79,4 +76,18 @@ class Students extends Component {
   }
 }
 
-export default Students;
+const mapStateToProps = state => ({
+  count: state.count,
+  students: state.students
+});
+
+const mapDispatchToProps = dispatch => ({
+  replaceStudents: (students, count) =>
+    dispatch(actionCreators.replaceStudents(students, count)),
+  addStudent: student => dispatch(actionCreators.addStudent(student))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Students);

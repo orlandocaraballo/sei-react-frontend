@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styles from "./student.module.css";
-import store, { actionCreators } from "./store";
+import store, { actionCreators } from "../store";
+import { connect } from "react-redux";
 
 class Student extends Component {
   handleRemoveStudent = e => {
@@ -24,4 +25,18 @@ class Student extends Component {
   }
 }
 
-export default Student;
+const mapStateToProps = state => ({
+  count: state.count,
+  students: state.students
+});
+
+const mapDispatchToProps = dispatch => ({
+  replaceStudents: (students, count) =>
+    dispatch(actionCreators.replaceStudents(students, count)),
+  addStudent: student => dispatch(actionCreators.addStudent(student))
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Student);

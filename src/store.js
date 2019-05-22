@@ -21,7 +21,10 @@ export const actionCreators = {
 const reducer = (state = { count: 0, students: [] }, action) => {
   switch (action.type) {
     case "REPLACE_STUDENTS":
-      return { count: action.count, students: action.students };
+      return {
+        count: action.count,
+        students: action.students
+      };
     case "ADD_STUDENT":
       return {
         count: state.count + 1,
@@ -41,6 +44,4 @@ const reducer = (state = { count: 0, students: [] }, action) => {
   }
 };
 
-const store = createStore(reducer);
-
-export default store;
+export default createStore(reducer);
