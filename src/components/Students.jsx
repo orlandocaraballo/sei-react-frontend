@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Student from "./Student";
-import _ from "lodash";
+import { shuffle } from "lodash-es";
 import styles from "./students.module.css";
 import { replaceStudents, addStudent } from "../redux/actionCreators";
 import { connect } from "react-redux";
@@ -15,7 +15,7 @@ class Students extends Component {
     // store.subscribe(() => console.log(store.getState()));
 
     // dispatch our replace students action
-    this.unsubscribe = this.props.replaceStudents(_.shuffle(data), data.length);
+    this.unsubscribe = this.props.replaceStudents(shuffle(data), data.length);
   }
 
   componentWillUnmount() {
