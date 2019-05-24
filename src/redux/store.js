@@ -1,5 +1,6 @@
 import { createStore, applyMiddleware } from "redux";
-import { REPLACE_STUDENTS, ADD_STUDENT, REMOVE_STUDENT } from "./types";
+import thunk from "redux-thunk";
+import { THUNK, REPLACE_STUDENTS, ADD_STUDENT, REMOVE_STUDENT } from "./types";
 
 const reducer = (state = { count: 0, students: [] }, action) => {
   switch (action.type) {
@@ -16,6 +17,8 @@ const reducer = (state = { count: 0, students: [] }, action) => {
       );
 
       return { count: state.count - 1, students: students };
+    case THUNK:
+      return state;
     default:
       return state;
   }
@@ -26,4 +29,4 @@ const logger = store => next => action => {
   next(action);
 };
 
-export default createStore(reducer, applyMiddleware(logger));
+export default createStore(reducer, applyMiddleware(logger, thunk));

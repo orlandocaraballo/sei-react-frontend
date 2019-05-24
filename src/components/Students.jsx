@@ -1,23 +1,28 @@
 import React, { Component } from "react";
 import Student from "./Student";
-import { shuffle } from "lodash-es";
 import styles from "./students.module.css";
-import { replaceStudents, addStudent } from "../redux/actionCreators";
+import {
+  replaceStudents,
+  addStudent,
+  fetchStudents
+} from "../redux/actionCreators";
 import { connect } from "react-redux";
 
 class Students extends Component {
   async componentDidMount() {
-    const data = await (await fetch(
-      "https://sei-api.herokuapp.com/students"
-    )).json();
-    // const data = await res.json();
+    // const data = await (await fetch(
+    //   "https://sei-api.herokuapp.com/students"
+    // )).json();
 
+    this.props.fetchStudents();
+
+    // const data = await res.json();
     // setup our subscriptions
     // store.subscribe(() => this.setState(store.getState));
     // store.subscribe(() => console.log(store.getState()));
 
     // dispatch our replace students action
-    this.unsubscribe = this.props.replaceStudents(shuffle(data), data.length);
+    // this.unsubscribe = this.props.replaceStudents(shuffle(data), data.length);
   }
 
   componentWillUnmount() {
@@ -80,7 +85,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   replaceStudents: (students, count) =>
     dispatch(replaceStudents(students, count)),
-  addStudent: student => dispatch(addStudent(student))
+  addStudent: student => dispatch(addStudent(student)),
+  fetchStudents: () => dispatch(fetchStudents())
 });
 
 export default connect(
