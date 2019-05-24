@@ -7,8 +7,10 @@ import { connect } from "react-redux";
 
 class Students extends Component {
   async componentDidMount() {
-    const res = await fetch("https://sei-api.herokuapp.com/students");
-    const data = await res.json();
+    const data = await (await fetch(
+      "https://sei-api.herokuapp.com/students"
+    )).json();
+    // const data = await res.json();
 
     // setup our subscriptions
     // store.subscribe(() => this.setState(store.getState));
@@ -52,21 +54,19 @@ class Students extends Component {
 
     return (
       <React.Fragment>
-        <div>
-          <form action="post" onSubmit={this.handleSubmit}>
-            <input type="text" name="nameInput" id="" placeholder="name" />
-            <input type="text" name="ageInput" id="" placeholder="age" />
-            <input type="text" name="genderInput" id="" placeholder="gender" />
-            <input
-              type="text"
-              name="knownForInput"
-              id=""
-              placeholder="known for"
-            />
-            <input type="submit" value="Create Rando Student!" />
-          </form>
-        </div>
-        <ul>{studentElements}</ul>
+        <form action="post" onSubmit={this.handleSubmit}>
+          <input type="text" name="nameInput" id="" placeholder="Name" />
+          <input type="text" name="ageInput" id="" placeholder="Age" />
+          <input type="text" name="genderInput" id="" placeholder="Gender" />
+          <input
+            type="text"
+            name="knownForInput"
+            id=""
+            placeholder="Known for"
+          />
+          <input type="submit" value="Create Rando Student!" />
+        </form>
+        <ul className={styles.students}>{studentElements}</ul>
       </React.Fragment>
     );
   }

@@ -14,7 +14,7 @@ class Student extends Component {
     return (
       <React.Fragment>
         <h2 className={styles.strong}>{name}</h2>
-        <ul>
+        <ul className={styles.details}>
           <li>{gender}</li>
           <li>{knownFor}</li>
           <li>{cohort.name}</li>
