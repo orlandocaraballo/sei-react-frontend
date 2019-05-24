@@ -1,5 +1,5 @@
 .student {
-  background-color: #e7e7e7;
+  background-color: #f8f8f8;
 }
 
 .students {
@@ -29,7 +29,7 @@ input:first-child {
   margin-left: 0;
 }
 
-input[type=submit] {
+input[type="submit"] {
   height: 2.3em;
   padding: 0;
 }
